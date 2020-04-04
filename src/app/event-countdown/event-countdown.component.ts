@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SponsoredEvent } from '../event'
 import { CartesianPoint, PolarPoint } from '../point';
+import { Sponsor } from '../sponsor';
+import { Person } from '../person';
 
 @Component({
   selector: 'app-event-countdown',
@@ -9,42 +11,44 @@ import { CartesianPoint, PolarPoint } from '../point';
 })
 export class EventCountdownComponent implements OnInit {
 
-  @Input() event: SponsoredEvent;
+  @Input() event?: SponsoredEvent = new SponsoredEvent(
+    'Tekken 1v1',
+    new Date("2019-10-23T21:00"),
+    new Sponsor("SSI Schäfer", "../assets/sponsorer/ssi-schaefer.svg"),
+    "../assets/sponsor.2.svg",
+    [
+      new Person("John Doe", "../assets/crew/placeholder_highcontrast.png"),
+      new Person("John Doe", "../assets/crew/placeholder_highcontrast.png"),
+      new Person("John Doe", "../assets/crew/placeholder_highcontrast.png"),
+      new Person("John Doe", "../assets/crew/placeholder_highcontrast.png")
+    ],
+    "Her er beskrivelsen"
+  );
+  @Input() countdown_time?: number = 1800000;
 
-  minutes: number = 30;
-  seconds: number = 0;
-  time_left: Date = new Date(0);
-  time_format = { minute: "2-digit", second: "2-digit" };
+  minutes = 30;
+  seconds = 0;
+  time_left = new Date(0);
   arc_description = "";
 
   constructor() { }
 
   ngOnInit() {
     setInterval(() => {
+      if (!this.event || !this.countdown_time) return;
       this.time_left = new Date(this.event.start.getTime() - Date.now());
       this.arc_description = this.describeArc(
-        new CartesianPoint(150, 150), 
-        new PolarPoint(0, 67),
-        new PolarPoint(this.time_left.getTime()/1800000*360, 67))
+        new PolarPoint((this.time_left.getTime() / this.countdown_time) * 360, 135))
     }, 250);
   }
 
-  describeArc(center: CartesianPoint, startArc: PolarPoint, endArc: PolarPoint) {
-    console.log("Describing arc...");
-    //console.log("center: " + center)
-    //console.log("startArc: " + startArc);
-    console.log("endArc" + endArc);
-    let start = center.add(endArc.toCartesian());
-    let end = center.add(startArc.toCartesian());
+  describeArc(polarPoint: PolarPoint) {
+    let cartesianPoint = polarPoint.toCartesian();
 
-    console.log("start: " + start);
-    //console.log("end: " + end);
-
-    let largeArcFlag = endArc.angle - startArc.angle <= 180;
+    let largeArcFlag = polarPoint.angle <= 180;
 
     var d = [
-      "M", start.x, start.y,
-      "A", startArc.distance, endArc.distance, 0, largeArcFlag ? "0" : "1", 0, end.x, end.y
+      "M 0 0 v -135 A 135 135 0", largeArcFlag ? "0" : "1", "1", cartesianPoint.x, cartesianPoint.y, 'z'
     ].join(" ");
 
     return d;

@@ -1,36 +1,35 @@
-
-<div style="width:66%;height:100%;float:left;overflow: hidden;">
+<div *ngIf="event && countdown_time" style="width:66%;height:100%;float:left;overflow: hidden;">
   <div style="height:60%">
-    <img src="{{event.image}}">
+    <img src="{{event.image}}" style="width:100%;position:relative;top:50%;transform:translateY(-50%)">
   </div>
   <div style="height:40%">
-      <h3>Sponsoreret af {{event.sponsor?.name}}</h3>
-      <img src="{{event.sponsor?.logo}}">
+    <h3 align="center">Sponsoreret af {{event.sponsor.name}}</h3>
+    <img src="{{event.sponsor.logo}}" style="max-width:80%; width:80%; margin-left: auto; margin-right: auto; display:block">
   </div>
 </div>
 <div style="width:33%;height:100%;float:right">
   <div style="height:33%">
     <h1 style="margin:0;padding-top:1em">{{event.title}}</h1>
-    <p style="margin:0">Turnerings besked</p>
+    <h2 style="margin:0">{{event.message}}</h2>
   </div>
-  <div style="height:33%">
-    <svg width="300" height="300">
-      <path id="timer_fill" fill="none" stroke="#3c3" stroke-width="135" [attr.d]="arc_description"/>
-      <circle cx="150" cy="150" r="135" stroke="black" stroke-width="10" fill="none"/>
-      <text id="timer_text" x="150" y="150" text-anchor="middle" alignment-baseline="central" font-size="67">{{time_left.toLocaleTimeString([],time_format)}}</text>
+  <div style="height:33%;margin-left: auto; margin-right: auto;display: block">
+    <svg width="100%" height="100%" viewBox="0 0 300 300">
+      <path fill="none" fill="#3c3" transform="translate(150, 150)" [attr.d]="arc_description" />
+      <circle cx="150" cy="150" r="135" stroke="black" stroke-width="10" fill="none" />
+      <text x="150" y="150" text-anchor="middle" alignment-baseline="central"
+        font-size="72">{{time_left|date:'mm:ss'}}
+      </text>
     </svg>
   </div>
   <div style="height:33%">
     <p style="margin:0;padding-top:1em">Turnerings ansvarlige</p>
-    <mat-grid-list cols=3>
-      <mat-grid-tile><img src="#"></mat-grid-tile>
-      <mat-grid-tile><img src="#"></mat-grid-tile>
-      <mat-grid-tile><img src="#"></mat-grid-tile>
-      <mat-grid-tile>NAME</mat-grid-tile>
-      <mat-grid-tile>NAME</mat-grid-tile>
-      <mat-grid-tile>NAME</mat-grid-tile>
+    <mat-grid-list rowHeight="10%" *ngIf="event.responsible" cols="{{event.responsible.length}}">
+      <mat-grid-tile rowspan="8" *ngFor="let responsible of event.responsible">
+        <img src="{{responsible.image}}">
+      </mat-grid-tile>
+      <mat-grid-tile *ngFor="let responsible of event.responsible">
+        {{responsible.name}}
+      </mat-grid-tile>
     </mat-grid-list>
   </div>
 </div>
-    
-    

@@ -1,10 +1,18 @@
-<mat-sidenav-container style='height: 100%;'>
-  <mat-sidenav opened mode="side">
+<mat-sidenav-container style='height: 100%; margin: 1em'>
+  <mat-sidenav #sidenav opened mode="side">
     <h1>{{title}}</h1>
-    <app-plan [events]="events"></app-plan>
+    <app-plan [events]="events" (sponsor)="activateSponsor($event)"></app-plan>
   </mat-sidenav>
-  <app-event-countdown *ngIf="countdown_event" [event]="countdown_event"></app-event-countdown>
-  <app-sponsor-carousel *ngIf="!countdown_event"></app-sponsor-carousel>
+  <div style="height:100%">
+    <ng-container *ngIf="active_sponsor">
+      <app-sponsor [sponsor]="active_sponsor"></app-sponsor>
+    </ng-container>
+    <ng-container *ngIf="!active_sponsor && countdown_event">
+      <app-event-countdown [event]="countdown_event" [countdown_time]="countdown_time"></app-event-countdown>
+    </ng-container>
+    <ng-container *ngIf="!active_sponsor && !countdown_event">
+      <app-sponsor-carousel [sponsors]="sponsors"></app-sponsor-carousel>
+    </ng-container>
+  </div>
 </mat-sidenav-container>
-
 <router-outlet></router-outlet>

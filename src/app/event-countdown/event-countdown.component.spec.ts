@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EventCountdownComponent } from './event-countdown.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 describe('EventCountdownComponent', () => {
   let component: EventCountdownComponent;
@@ -8,7 +9,8 @@ describe('EventCountdownComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EventCountdownComponent ]
+      declarations: [ EventCountdownComponent ],
+      imports: [ MatGridListModule ]
     })
     .compileComponents();
   }));

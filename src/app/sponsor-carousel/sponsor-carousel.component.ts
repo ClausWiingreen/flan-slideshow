@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Sponsor } from '../sponsor';
 
 @Component({
@@ -7,23 +7,23 @@ import { Sponsor } from '../sponsor';
   styleUrls: ['./sponsor-carousel.component.css']
 })
 export class SponsorCarouselComponent implements OnInit {
-  sponsors: Sponsor[] = [
-    { name: "Sponsor1", logo: "../../assets/sponsor.1.svg" },
-    { name: "Sponsor2", logo: "../../assets/sponsor.2.svg" },
-    { name: "Sponsor3", logo: "../../assets/sponsor.3.svg" },
-    { name: "Sponsor4", logo: "../../assets/sponsor.4.svg" },
-    { name: "Sponsor5", logo: "../../assets/sponsor.5.png" }
-  ];
+  @Input() sponsors!: Sponsor[];
 
-  current_index: number = 0;
-  current_logo: string;
+  current_index = 0;
+  current_logo = "";
+  delay = 5000;
 
   constructor() { }
 
+  nextSponsor(){
+    this.current_logo = this.sponsors[this.current_index].logo;
+    this.current_index = (this.current_index + 1) % this.sponsors.length;
+  }
+
   ngOnInit() {
+    this.nextSponsor();
     setInterval(() => {
-      this.current_logo = this.sponsors[this.current_index].logo;
-      this.current_index = (this.current_index + 1) % this.sponsors.length;
-    }, 1000);
+      this.nextSponsor();
+    }, this.delay);
   }
 }

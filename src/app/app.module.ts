@@ -5,14 +5,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatListModule} from '@angular/material/list';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { PlanComponent } from './plan/plan.component';
 import { EventCountdownComponent } from './event-countdown/event-countdown.component';
 import { DateFilterPipe } from './date-filter.pipe';
 import { SponsorCarouselComponent } from './sponsor-carousel/sponsor-carousel.component';
+import { SponsorComponent } from './sponsor/sponsor.component';
+import { AwardsCeremonyComponent } from './awards-ceremony/awards-ceremony.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { SponsorCarouselComponent } from './sponsor-carousel/sponsor-carousel.co
     PlanComponent,
     EventCountdownComponent,
     DateFilterPipe,
-    SponsorCarouselComponent
+    SponsorCarouselComponent,
+    SponsorComponent,
+    AwardsCeremonyComponent
   ],
   imports: [
     BrowserModule,

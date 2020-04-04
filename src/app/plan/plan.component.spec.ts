@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlanComponent } from './plan.component';
+import { DateFilterPipe } from '../date-filter.pipe';
+import { MatListModule } from '@angular/material/list';
 
 describe('PlanComponent', () => {
   let component: PlanComponent;
@@ -8,7 +10,8 @@ describe('PlanComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlanComponent ]
+      declarations: [ PlanComponent, DateFilterPipe ], 
+      imports: [ MatListModule ]
     })
     .compileComponents();
   }));

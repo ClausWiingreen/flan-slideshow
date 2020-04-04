@@ -1,8 +1,8 @@
 <h2>{{weekdays[now.getDay()]}}</h2>
 <mat-list class="events">
   <mat-list-item class="event" 
-    *ngFor="let event of events | dateFilter:now" [class.active]="event.start <= now && event.end > now">
-    <span class="time">{{event.start.toLocaleTimeString(locales, options)}}</span> {{event.title}}
+    *ngFor="let event of events | dateFilter:now" [class.active]="event.start <= now" (click)="onSelect(event)">
+    <span class="time">{{event.start|date:'HH:mm'}}</span> {{event.title}}
   </mat-list-item>
 </mat-list>
 
